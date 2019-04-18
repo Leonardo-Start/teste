@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace APIPRojeto.EF.Migrations
+namespace APIPRojeto.Migrations
 {
     [DbContext(typeof(LataVelhaContext))]
-    [Migration("20190416182532_AdicionandoService")]
-    partial class AdicionandoService
+    [Migration("20190418143046_teste")]
+    partial class teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,6 +94,10 @@ namespace APIPRojeto.EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CarId");
+
+                    b.HasIndex("ServiceId");
+
                     b.ToTable("ServiceOrder");
                 });
 
@@ -102,6 +106,19 @@ namespace APIPRojeto.EF.Migrations
                     b.HasOne("APIPRojeto.Models.Owner", "Owner")
                         .WithMany()
                         .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("APIPRojeto.Models.ServiceOrder", b =>
+                {
+                    b.HasOne("APIPRojeto.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("APIPRojeto.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
